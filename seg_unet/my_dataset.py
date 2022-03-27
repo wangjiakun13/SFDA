@@ -31,12 +31,14 @@ class DriveDataset(Dataset):
         img = Image.open(self.img_list[idx]).convert('RGB')
         # manual = Image.open(self.manual[idx]).convert('L')
         # manual = np.array(manual) / 255
-        roi_mask = Image.open(self.roi_mask[idx]).convert('L')
-        roi_mask = np.array(roi_mask)
-        # mask = np.clip(manual + roi_mask, a_min=0, a_max=255)
+        roi_mask = Image.open(self.roi_mask[idx]).convert("L")
+        mask = np.array(roi_mask) / 255
+        mask = np.clip(mask, a_min=0, a_max=255)
 
         # 这里转回PIL的原因是，transforms中是对PIL数据进行处理
-        mask = Image.fromarray(roi_mask)
+
+        mask = Image.fromarray(mask)
+
 
         if self.transforms is not None:
             img, mask = self.transforms(img, mask)
