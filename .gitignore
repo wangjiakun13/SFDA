@@ -1,3 +1,4 @@
 #dir
 .idea/
 .git/
+.__pycache__/
